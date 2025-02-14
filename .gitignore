@@ -44,4 +44,4 @@ coverage/
 .nyc_output/
 
 # Игнорировать файлы для локальной разработки
-.local/
+.local/node_modules/@next/swc-darwin-arm64/next-swc.darwin-arm64.node

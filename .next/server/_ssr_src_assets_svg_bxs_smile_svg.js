@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "_ssr_src_assets_svg_bxs_smile_svg";
+exports.ids = ["_ssr_src_assets_svg_bxs_smile_svg"];
+exports.modules = {
+
+/***/ "(ssr)/./src/assets/svg/bxs_smile.svg":
+/*!**************************************!*\
+  !*** ./src/assets/svg/bxs_smile.svg ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"(ssr)/./node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\nvar _path;\nfunction _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }\n\nvar SvgBxsSmile = function SvgBxsSmile(props) {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"svg\", _extends({\n    xmlns: \"http://www.w3.org/2000/svg\",\n    width: 24,\n    height: 24,\n    fill: \"none\"\n  }, props), _path || (_path = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"path\", {\n    fill: \"#fff\",\n    fillOpacity: 0.8,\n    d: \"M12 22c5.514 0 10-4.486 10-10S17.514 2 12 2 2 6.486 2 12s4.486 10 10 10m3.493-13a1.494 1.494 0 1 1 .076 2.987A1.494 1.494 0 0 1 15.493 9m-4.301 6.919a4.1 4.1 0 0 0 1.616 0q.381-.079.75-.233c.234-.1.464-.224.679-.368q.313-.214.591-.489.274-.274.489-.592l1.658 1.117a6 6 0 0 1-3.768 2.525 6.1 6.1 0 0 1-2.414-.001 5.9 5.9 0 0 1-2.148-.903 6.1 6.1 0 0 1-1.621-1.622l1.658-1.117q.216.318.488.59a4 4 0 0 0 2.022 1.093M8.5 9a1.5 1.5 0 1 1-.001 3.001A1.5 1.5 0 0 1 8.5 9\"\n  })));\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SvgBxsSmile);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXNzZXRzL3N2Zy9ieHNfc21pbGUuc3ZnIiwibWFwcGluZ3MiOiI7Ozs7OztBQUFBO0FBQ0Esc0JBQXNCLHdFQUF3RSxnQkFBZ0Isc0JBQXNCLE9BQU8sc0JBQXNCLG9CQUFvQixnREFBZ0QsV0FBVztBQUNqTjtBQUMvQjtBQUNBLHNCQUFzQixnREFBbUI7QUFDekM7QUFDQTtBQUNBO0FBQ0E7QUFDQSxHQUFHLHlDQUF5QyxnREFBbUI7QUFDL0Q7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0EsaUVBQWUsV0FBVyIsInNvdXJjZXMiOlsiL1VzZXJzL2RhbmlpbC9EZXNrdG9wL1Byb2plY3QvdG8tZG8tbmV4dC9zcmMvYXNzZXRzL3N2Zy9ieHNfc21pbGUuc3ZnIl0sInNvdXJjZXNDb250ZW50IjpbInZhciBfcGF0aDtcbmZ1bmN0aW9uIF9leHRlbmRzKCkgeyByZXR1cm4gX2V4dGVuZHMgPSBPYmplY3QuYXNzaWduID8gT2JqZWN0LmFzc2lnbi5iaW5kKCkgOiBmdW5jdGlvbiAobikgeyBmb3IgKHZhciBlID0gMTsgZSA8IGFyZ3VtZW50cy5sZW5ndGg7IGUrKykgeyB2YXIgdCA9IGFyZ3VtZW50c1tlXTsgZm9yICh2YXIgciBpbiB0KSAoe30pLmhhc093blByb3BlcnR5LmNhbGwodCwgcikgJiYgKG5bcl0gPSB0W3JdKTsgfSByZXR1cm4gbjsgfSwgX2V4dGVuZHMuYXBwbHkobnVsbCwgYXJndW1lbnRzKTsgfVxuaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCI7XG52YXIgU3ZnQnhzU21pbGUgPSBmdW5jdGlvbiBTdmdCeHNTbWlsZShwcm9wcykge1xuICByZXR1cm4gLyojX19QVVJFX18qL1JlYWN0LmNyZWF0ZUVsZW1lbnQoXCJzdmdcIiwgX2V4dGVuZHMoe1xuICAgIHhtbG5zOiBcImh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnXCIsXG4gICAgd2lkdGg6IDI0LFxuICAgIGhlaWdodDogMjQsXG4gICAgZmlsbDogXCJub25lXCJcbiAgfSwgcHJvcHMpLCBfcGF0aCB8fCAoX3BhdGggPSAvKiNfX1BVUkVfXyovUmVhY3QuY3JlYXRlRWxlbWVudChcInBhdGhcIiwge1xuICAgIGZpbGw6IFwiI2ZmZlwiLFxuICAgIGZpbGxPcGFjaXR5OiAwLjgsXG4gICAgZDogXCJNMTIgMjJjNS41MTQgMCAxMC00LjQ4NiAxMC0xMFMxNy41MTQgMiAxMiAyIDIgNi40ODYgMiAxMnM0LjQ4NiAxMCAxMCAxMG0zLjQ5My0xM2ExLjQ5NCAxLjQ5NCAwIDEgMSAuMDc2IDIuOTg3QTEuNDk0IDEuNDk0IDAgMCAxIDE1LjQ5MyA5bS00LjMwMSA2LjkxOWE0LjEgNC4xIDAgMCAwIDEuNjE2IDBxLjM4MS0uMDc5Ljc1LS4yMzNjLjIzNC0uMS40NjQtLjIyNC42NzktLjM2OHEuMzEzLS4yMTQuNTkxLS40ODkuMjc0LS4yNzQuNDg5LS41OTJsMS42NTggMS4xMTdhNiA2IDAgMCAxLTMuNzY4IDIuNTI1IDYuMSA2LjEgMCAwIDEtMi40MTQtLjAwMSA1LjkgNS45IDAgMCAxLTIuMTQ4LS45MDMgNi4xIDYuMSAwIDAgMS0xLjYyMS0xLjYyMmwxLjY1OC0xLjExN3EuMjE2LjMxOC40ODguNTlhNCA0IDAgMCAwIDIuMDIyIDEuMDkzTTguNSA5YTEuNSAxLjUgMCAxIDEtLjAwMSAzLjAwMUExLjUgMS41IDAgMCAxIDguNSA5XCJcbiAgfSkpKTtcbn07XG5leHBvcnQgZGVmYXVsdCBTdmdCeHNTbWlsZTsiXSwibmFtZXMiOltdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(ssr)/./src/assets/svg/bxs_smile.svg\n");
+
+/***/ })
+
+};
+;

@@ -1,28 +1,233 @@
-'use client'
-import Input from "@/components/UI/Input";
-import TodoList from "@/components/To-Do/TodoList";
+'use client';
 
-const items = [
-  { id: 1, title: "Task 1", completed: false },
-  { id: 2, title: "Task 2", completed: false },
-  { id: 3, title: "Task 3", completed: false },
-];
+import { useState } from 'react';
+import {
+  DndContext,
+  closestCenter,
+  DragEndEvent,
+  DragStartEvent,
+  DragOverlay,
+} from '@dnd-kit/core';
+import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import Input from '@/components/UI/Input';
+import TodoList from '@/components/To-Do/TodoList';
+
+
+export interface TodoItem {
+  id: string;
+  start: string;
+  finished: string;
+  description: string;
+  completed: boolean;
+  isEditing?: boolean;
+}
+
+interface Columns {
+  [key: string]: TodoItem[];
+}
+
+const initialColumns: Columns = {
+  'to-do': [
+    {
+      id: '1',
+      start: '19.12.2024',
+      finished: '30.12.2024',
+      description: 'Task 2',
+      completed: false,
+    },
+    {
+      id: '2',
+      start: '19.12.2024',
+      finished: '30.12.2024',
+      description: 'Task 3',
+      completed: false,
+    },
+    {
+      id: '3',
+      start: '19.12.2024',
+      finished: '30.12.2024',
+      description: 'Task 1',
+      completed: false,
+    },
+  ],
+  'in-progress': [],
+  review: [],
+  done: [],
+};
+
+// Маппинг для разных SVG-иконок для колонок
+const iconMapping: Record<string, string> = {
+  'to-do': 'bxs_happy-alt', // например, svg с задачей
+  'in-progress': 'bxs_smile', // svg загрузки или процесса
+  review: 'bxs_upside-down', // svg для ревью
+  done: 'bxs_ghost', // svg для выполненной задачи
+};
 
 export default function ToDo() {
+  const [columns, setColumns] = useState<Columns>(initialColumns);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Поиск колонки, в которой находится задача
+  const findContainer = (id: string): string | null => {
+    for (const column in columns) {
+      if (columns[column].some((item) => item.id === id)) {
+        return column;
+      }
+    }
+    return id in columns ? id : null;
+  };
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    setActiveId(active.id as string);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) {
+      setActiveId(null);
+      return;
+    }
+
+    const activeIdStr = active.id as string;
+    const overId = over.id as string;
+
+    const sourceColumn = findContainer(activeIdStr);
+    const destinationColumn = findContainer(overId);
+
+    if (sourceColumn && destinationColumn) {
+      if (sourceColumn === destinationColumn) {
+        if (activeIdStr !== overId) {
+          const columnItems = columns[sourceColumn];
+          const oldIndex = columnItems.findIndex((item) => item.id === activeIdStr);
+          const newIndex = columnItems.findIndex((item) => item.id === overId);
+          const newItems = arrayMove(columnItems, oldIndex, newIndex);
+          setColumns((prev) => ({
+            ...prev,
+            [sourceColumn]: newItems,
+          }));
+        }
+      } else {
+        const sourceItems = [...columns[sourceColumn]];
+        const destinationItems = [...columns[destinationColumn]];
+        const activeIndex = sourceItems.findIndex((item) => item.id === activeIdStr);
+        const [movedItem] = sourceItems.splice(activeIndex, 1);
+        destinationItems.push(movedItem);
+        setColumns((prev) => ({
+          ...prev,
+          [sourceColumn]: sourceItems,
+          [destinationColumn]: destinationItems,
+        }));
+      }
+    }
+    setActiveId(null);
+  };
+
+  // Добавление новой задачи – сразу в режиме редактирования
+  const handleAddTask = (listType: string) => {
+    const newTask: TodoItem = {
+      id: new Date().getTime().toString(),
+      start: new Date().toLocaleDateString(),
+      finished: '',
+      description: 'New task',
+      completed: false,
+      isEditing: true,
+    };
+
+    setColumns((prev) => ({
+      ...prev,
+      [listType]: [...prev[listType], newTask],
+    }));
+  };
+
+  // Обновление задачи по её id
+  const handleUpdateTask = (taskId: string, changes: Partial<TodoItem>) => {
+    setColumns((prev) => {
+      const updated = { ...prev };
+      for (const key in updated) {
+        const index = updated[key].findIndex((task) => task.id === taskId);
+        if (index !== -1) {
+          updated[key][index] = { ...updated[key][index], ...changes };
+          break;
+        }
+      }
+      return updated;
+    });
+  };
+
+  // Очистка колонки done
+  const handleClearDone = () => {
+    setColumns((prev) => ({
+      ...prev,
+      done: [],
+    }));
+  };
+
   return (
-      <main>
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">Your tasks</h1>
-          <Input type="text" placeholder="Search..." value="" onChange={(t) => {console.log(t);
-          }} />
-        </div>
-        
+    <main>
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-bold">Your tasks</h1>
+        <Input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
         <div className="grid grid-cols-4 mt-6 gap-4">
-          <TodoList icon="trash" title="To-Do" listType="to-do" items={items} />
-          <TodoList icon="trash" title="To-Do" listType="to-do" items={items} />
-          <TodoList icon="trash" title="To-Do" listType="to-do" items={items} />
-          <TodoList icon="trash" title="To-Do" listType="to-do" items={items} />
+          {Object.entries(columns).map(([columnId, items]) => {
+            // Фильтрация задач по description
+            const filteredItems = items.filter((item) =>
+              item.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            return (
+              <SortableContext key={columnId} items={filteredItems.map((item) => item.id)}>
+                <TodoList
+                  icon={iconMapping[columnId] || 'bxs-default'}
+                  title={columnId}
+                  listType={columnId}
+                  items={filteredItems}
+                  onAddTask={handleAddTask}
+                  onUpdateTask={handleUpdateTask}
+                  onClearTasks={columnId === 'done' ? handleClearDone : undefined}
+                />
+              </SortableContext>
+            );
+          })}
         </div>
-      </main>
+
+        <DragOverlay>
+          {activeId
+            ? (() => {
+                const container = findContainer(activeId);
+                const item = container ? columns[container].find((i) => i.id === activeId) : null;
+                return item ? (
+                  <div className="bg-gray-500/25 p-2 rounded-sm">
+                    <p>
+                      <span className="text-gray-400">Start: </span>
+                      {item.start}
+                    </p>
+                    <p>
+                      <span className="text-gray-400">Finished: </span>
+                      {item.finished}
+                    </p>
+                    <p>
+                      <span className="text-gray-400">Description: </span>
+                      {item.description}
+                    </p>
+                  </div>
+                ) : null;
+              })()
+            : null}
+        </DragOverlay>
+      </DndContext>
+    </main>
   );
 }

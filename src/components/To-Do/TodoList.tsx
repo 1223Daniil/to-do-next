@@ -1,37 +1,63 @@
 import React from 'react';
-import SvgIcon from "@/components/UI/Icon";
-
-interface TodoItem {
-    id: number;
-    title: string;
-    completed: boolean;
-}
+import SvgIcon from '@/components/UI/Icon';
+import SortableTodoItem from './SortableTodoItem';
+import { TodoItem } from '@/app/page';
+import { useDroppable } from '@dnd-kit/core';
 
 interface TodoListProps {
-    icon: string;
-    title: string;
-    listType: string;
-    items: TodoItem[];
+  icon: string;
+  title: string;
+  listType: string;
+  items: TodoItem[];
+  onAddTask: (listType: string) => void;
+  onUpdateTask: (taskId: string, changes: Partial<TodoItem>) => void;
+  onClearTasks?: () => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ icon, title, listType, items }) => {
-    return (
-        <div className="bg-black/50 p-4">
-            <div className="">
-                <SvgIcon name={icon} className="w-6 h-6 text-blue-500" />
-                <h2>{title}</h2>
-            </div>
-            <ul className='flex flex-col p-2 gap-4'>
-                {items.map(item => (
-                    <li key={item.id} className="bg-gray-500/25 p-2 flex flex-col rounded-sm">
-                        <span>Задача: {item.title}</span>
-                        <span>ID: {item.id}</span>
-                        
-                    </li>
-                ))}
-            </ul>
+const TodoList: React.FC<TodoListProps> = ({
+  icon,
+  title,
+  listType,
+  items,
+  onAddTask,
+  onUpdateTask,
+  onClearTasks,
+}) => {
+  // Область для дропа, даже если колонка пуста
+  const { setNodeRef } = useDroppable({ id: listType });
+
+  return (
+    <div className="bg-black/50 p-4">
+      <div className="flex mb-2 justify-between items-center">
+        <div className="flex items-center gap-2">
+          <SvgIcon name={icon} className="w-6 h-6 text-blue-500" />
+          <h2 className="font-semibold text-2xl capitalize">{title}</h2>
         </div>
-    );
+        <div className="flex gap-2 items-center">
+          {listType === 'done' && onClearTasks && (
+            <button
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={onClearTasks}
+              className="bg-red-500 hover:bg-red-600 text-white p-1 rounded"
+            >
+              Clear All
+            </button>
+          )}
+          <p
+            className="text-gray-400 cursor-pointer select-none"
+            onClick={() => onAddTask(listType)}
+          >
+           {listType == 'to-do' ? '+ Add' : null}
+          </p>
+        </div>
+      </div>
+      <ul ref={setNodeRef} className="flex flex-col gap-4 min-h-[50px]">
+        {items.map((item) => (
+          <SortableTodoItem key={item.id} item={item} onUpdateTask={onUpdateTask} />
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default TodoList;

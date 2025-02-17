@@ -1,18 +1,29 @@
-import React, { FC, Suspense } from "react";
+import React, { FC, Suspense } from 'react';
 
 type Props = {
   name: string;
   className?: string;
 };
 
+// Кэш для ленивых SVG-компонентов
+const lazySvgCache: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {};
+
+// Функция для получения или создания ленивого SVG-компонента
+function getLazySvg(name: string) {
+  if (!lazySvgCache[name]) {
+    lazySvgCache[name] = React.lazy(() => import(`@/assets/svg/${name}.svg`));
+  }
+  return lazySvgCache[name];
+}
+
 const SvgIcon: FC<Props> = ({ name, className }) => {
-  const SvgComponent = React.lazy(() => import(`@/assets/svg/${name}.svg`));
+  const LazySvg = getLazySvg(name);
 
   return (
     <Suspense fallback={<span>Loading...</span>}>
-      <SvgComponent className={className} />
+      <LazySvg className={className} />
     </Suspense>
   );
 };
 
-export default SvgIcon;
+export default React.memo(SvgIcon);

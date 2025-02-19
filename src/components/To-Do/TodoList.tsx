@@ -23,7 +23,6 @@ const TodoList: React.FC<TodoListProps> = ({
   onUpdateTask,
   onClearTasks,
 }) => {
-  // Область для дропа, даже если колонка пуста
   const { setNodeRef } = useDroppable({ id: listType });
 
   return (
@@ -38,9 +37,8 @@ const TodoList: React.FC<TodoListProps> = ({
             <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={onClearTasks}
-              className="bg-red-500 hover:bg-red-600 text-white p-1 rounded"
             >
-              Clear All
+              <SvgIcon name='trash' />
             </button>
           )}
           <p

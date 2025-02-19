@@ -10,7 +10,6 @@ interface SortableTodoItemProps {
 }
 
 const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask }) => {
-  // Отключаем drag, если задача в режиме редактирования
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: item.id,
     disabled: item.isEditing,
@@ -21,7 +20,6 @@ const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask 
     transition,
   };
 
-  // Локальное состояние для полей редактирования
   const [finishedInput, setFinishedInput] = useState(item.finished);
   const [descriptionInput, setDescriptionInput] = useState(item.description);
 
@@ -41,7 +39,6 @@ const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask 
 
   const handleCancel = (e: React.PointerEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    // Отменяем редактирование без сохранения изменений
     onUpdateTask(item.id, { isEditing: false });
     setFinishedInput(item.finished);
     setDescriptionInput(item.description);
@@ -66,40 +63,40 @@ const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask 
       </p>
       {item.isEditing ? (
         <>
-          <div>
+          <div className='flex gap-2'>
             <span className="text-gray-400">Finished: </span>
             <input
-              type="text"
+              type="date"
               value={finishedInput}
               onChange={(e) => setFinishedInput(e.target.value)}
               onPointerDown={(e) => e.stopPropagation()}
-              className="border p-1 bg-transparent text-white"
+              className="border border-gray-500 p-1 bg-transparent rounded-md"
             />
           </div>
-          <div>
+          <div className='flex gap-2'>
             <span className="text-gray-400">Description: </span>
             <input
               type="text"
               value={descriptionInput}
               onChange={(e) => setDescriptionInput(e.target.value)}
               onPointerDown={(e) => e.stopPropagation()}
-              className="border p-1 bg-transparent text-white"
+              className="border border-gray-500 p-1 bg-transparent rounded-md"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
             <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={handleSave}
-              className="bg-green-500 hover:bg-green-600 text-white p-1 rounded"
+              className='bg-gray-500/50 hover:bg-gray-400/50 p-2 rounded-full'
             >
-              Save
+              <SvgIcon name='check' />
             </button>
             <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={handleCancel}
-              className="bg-red-500 hover:bg-red-600 text-white p-1 rounded"
+              className='bg-gray-500/50 hover:bg-gray-400/50 p-2 rounded-full'
             >
-              Cancel
+              <SvgIcon name='cross' />
             </button>
           </div>
         </>

@@ -5,10 +5,8 @@ type Props = {
   className?: string;
 };
 
-// Кэш для ленивых SVG-компонентов
 const lazySvgCache: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {};
 
-// Функция для получения или создания ленивого SVG-компонента
 function getLazySvg(name: string) {
   if (!lazySvgCache[name]) {
     lazySvgCache[name] = React.lazy(() => import(`@/assets/svg/${name}.svg`));

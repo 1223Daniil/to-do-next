@@ -11,7 +11,7 @@ import {
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import Input from '@/components/UI/Input';
 import TodoList from '@/components/To-Do/TodoList';
-
+import SvgIcon from '@/components/UI/Icon';
 
 export interface TodoItem {
   id: string;
@@ -42,25 +42,17 @@ const initialColumns: Columns = {
       description: 'Task 3',
       completed: false,
     },
-    {
-      id: '3',
-      start: '19.12.2024',
-      finished: '30.12.2024',
-      description: 'Task 1',
-      completed: false,
-    },
   ],
   'in-progress': [],
   review: [],
   done: [],
 };
 
-// Маппинг для разных SVG-иконок для колонок
 const iconMapping: Record<string, string> = {
-  'to-do': 'bxs_happy-alt', // например, svg с задачей
-  'in-progress': 'bxs_smile', // svg загрузки или процесса
-  review: 'bxs_upside-down', // svg для ревью
-  done: 'bxs_ghost', // svg для выполненной задачи
+  'to-do': 'bxs_happy-alt',
+  'in-progress': 'bxs_smile',
+  review: 'bxs_upside-down',
+  done: 'bxs_ghost',
 };
 
 export default function ToDo() {
@@ -68,7 +60,6 @@ export default function ToDo() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Поиск колонки, в которой находится задача
   const findContainer = (id: string): string | null => {
     for (const column in columns) {
       if (columns[column].some((item) => item.id === id)) {
@@ -124,7 +115,6 @@ export default function ToDo() {
     setActiveId(null);
   };
 
-  // Добавление новой задачи – сразу в режиме редактирования
   const handleAddTask = (listType: string) => {
     const newTask: TodoItem = {
       id: new Date().getTime().toString(),
@@ -141,7 +131,6 @@ export default function ToDo() {
     }));
   };
 
-  // Обновление задачи по её id
   const handleUpdateTask = (taskId: string, changes: Partial<TodoItem>) => {
     setColumns((prev) => {
       const updated = { ...prev };
@@ -156,7 +145,6 @@ export default function ToDo() {
     });
   };
 
-  // Очистка колонки done
   const handleClearDone = () => {
     setColumns((prev) => ({
       ...prev,
@@ -183,7 +171,6 @@ export default function ToDo() {
       >
         <div className="grid grid-cols-4 mt-6 gap-4">
           {Object.entries(columns).map(([columnId, items]) => {
-            // Фильтрация задач по description
             const filteredItems = items.filter((item) =>
               item.description.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -209,7 +196,7 @@ export default function ToDo() {
                 const container = findContainer(activeId);
                 const item = container ? columns[container].find((i) => i.id === activeId) : null;
                 return item ? (
-                  <div className="bg-gray-500/25 p-2 rounded-sm">
+                  <div className="bg-gray-500/25 p-2 rounded-sm flex flex-col gap-2">
                     <p>
                       <span className="text-gray-400">Start: </span>
                       {item.start}
@@ -222,6 +209,9 @@ export default function ToDo() {
                       <span className="text-gray-400">Description: </span>
                       {item.description}
                     </p>
+                    <div className='bg-gray-500/50 hover:bg-gray-400/50 p-2 rounded-full self-end'>
+                      <SvgIcon name="edit" className="w-6 h-6" />
+                    </div>
                   </div>
                 ) : null;
               })()

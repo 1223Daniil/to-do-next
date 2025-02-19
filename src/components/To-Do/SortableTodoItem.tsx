@@ -20,6 +20,10 @@ const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask 
     transition,
   };
 
+  const formatDate = (date: string) => {
+    return date.replace(/-/g, '.');
+  };
+
   const [finishedInput, setFinishedInput] = useState(item.finished);
   const [descriptionInput, setDescriptionInput] = useState(item.description);
 
@@ -104,7 +108,7 @@ const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask 
         <>
           <p>
             <span className="text-gray-400">Finished: </span>
-            {item.finished}
+            {formatDate(item.finished)}
           </p>
           <p>
             <span className="text-gray-400">Description: </span>

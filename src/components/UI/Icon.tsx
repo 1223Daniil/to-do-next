@@ -1,4 +1,5 @@
 import React, { FC, Suspense } from 'react';
+import Loader from '@/components/UI/Loader';
 
 type Props = {
   name: string;
@@ -18,7 +19,7 @@ const SvgIcon: FC<Props> = ({ name, className }) => {
   const LazySvg = getLazySvg(name);
 
   return (
-    <Suspense fallback={<span>Loading...</span>}>
+    <Suspense fallback={<Loader />}>
       <LazySvg className={className} />
     </Suspense>
   );

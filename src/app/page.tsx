@@ -100,6 +100,10 @@ export default function ToDo() {
           }));
         }
       } else {
+        if (columns[destinationColumn].length >= 3) {
+          setActiveId(null);
+          return;
+        }
         const sourceItems = [...columns[sourceColumn]];
         const destinationItems = [...columns[destinationColumn]];
         const activeIndex = sourceItems.findIndex((item) => item.id === activeIdStr);
@@ -116,19 +120,23 @@ export default function ToDo() {
   };
 
   const handleAddTask = (listType: string) => {
-    const newTask: TodoItem = {
-      id: new Date().getTime().toString(),
-      start: new Date().toLocaleDateString(),
-      finished: '',
-      description: 'New task',
-      completed: false,
-      isEditing: true,
-    };
-
-    setColumns((prev) => ({
-      ...prev,
-      [listType]: [...prev[listType], newTask],
-    }));
+    setColumns((prev) => {
+      if (prev[listType].length >= 3) {
+        return prev;
+      }
+      const newTask: TodoItem = {
+        id: new Date().getTime().toString(),
+        start: new Date().toLocaleDateString(),
+        finished: '',
+        description: 'New task',
+        completed: false,
+        isEditing: true,
+      };
+      return {
+        ...prev,
+        [listType]: [...prev[listType], newTask],
+      };
+    });
   };
 
   const handleUpdateTask = (taskId: string, changes: Partial<TodoItem>) => {
@@ -209,7 +217,7 @@ export default function ToDo() {
                       <span className="text-gray-400">Description: </span>
                       {item.description}
                     </p>
-                    <div className='bg-gray-500/50 hover:bg-gray-400/50 p-2 rounded-full self-end'>
+                    <div className="bg-gray-500/50 hover:bg-gray-400/50 p-2 rounded-full self-end">
                       <SvgIcon name="edit" className="w-6 h-6" />
                     </div>
                   </div>

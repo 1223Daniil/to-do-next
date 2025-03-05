@@ -1,18 +1,8 @@
 import React from 'react';
 import SvgIcon from '@/components/UI/Icon';
 import SortableTodoItem from './SortableTodoItem';
-import { TodoItem } from '@/app/page';
+import { TodoListProps } from '@/types/todo';
 import { useDroppable } from '@dnd-kit/core';
-
-interface TodoListProps {
-  icon: string;
-  title: string;
-  listType: string;
-  items: TodoItem[];
-  onAddTask: (listType: string) => void;
-  onUpdateTask: (taskId: string, changes: Partial<TodoItem>) => void;
-  onClearTasks?: () => void;
-}
 
 const TodoList: React.FC<TodoListProps> = ({
   icon,

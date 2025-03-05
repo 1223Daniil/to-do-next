@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import SvgIcon from '@/components/UI/Icon';
-import { TodoItem } from '@/app/page';
-
-interface SortableTodoItemProps {
-  item: TodoItem;
-  onUpdateTask: (taskId: string, changes: Partial<TodoItem>) => void;
-}
+import { SortableTodoItemProps } from '@/types/todo';
 
 const SortableTodoItem: React.FC<SortableTodoItemProps> = ({ item, onUpdateTask }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({

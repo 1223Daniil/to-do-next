@@ -12,37 +12,11 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import Input from '@/components/UI/Input';
 import TodoList from '@/components/To-Do/TodoList';
 import SvgIcon from '@/components/UI/Icon';
-
-export interface TodoItem {
-  id: string;
-  start: string;
-  finished: string;
-  description: string;
-  completed: boolean;
-  isEditing?: boolean;
-}
-
-interface Columns {
-  [key: string]: TodoItem[];
-}
+import { TodoItem, Columns } from '@/types/todo';
+import { MAX_TASKS_PER_COLUMN } from "@/helpers/const";
 
 const initialColumns: Columns = {
-  'to-do': [
-    {
-      id: '1',
-      start: '19.12.2024',
-      finished: '30.12.2024',
-      description: 'Task 2',
-      completed: false,
-    },
-    {
-      id: '2',
-      start: '19.12.2024',
-      finished: '30.12.2024',
-      description: 'Task 3',
-      completed: false,
-    },
-  ],
+  'to-do': [],
   'in-progress': [],
   review: [],
   done: [],
@@ -100,7 +74,7 @@ export default function ToDo() {
           }));
         }
       } else {
-        if (columns[destinationColumn].length >= 3) {
+        if (columns[destinationColumn].length >= MAX_TASKS_PER_COLUMN) {
           setActiveId(null);
           return;
         }
@@ -121,11 +95,11 @@ export default function ToDo() {
 
   const handleAddTask = (listType: string) => {
     setColumns((prev) => {
-      if (prev[listType].length >= 3) {
+      if (prev[listType].length >= MAX_TASKS_PER_COLUMN) {
         return prev;
       }
       const newTask: TodoItem = {
-        id: new Date().getTime().toString(),
+        id: crypto.randomUUID(),
         start: new Date().toLocaleDateString(),
         finished: '',
         description: 'New task',
@@ -141,7 +115,7 @@ export default function ToDo() {
 
   const handleUpdateTask = (taskId: string, changes: Partial<TodoItem>) => {
     setColumns((prev) => {
-      const updated = { ...prev };
+      const updated = JSON.parse(JSON.stringify(prev)) as Columns;
       for (const key in updated) {
         const index = updated[key].findIndex((task) => task.id === taskId);
         if (index !== -1) {
